@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redeem Some Code</title>
+</head>
+<body>
+    <div class="redeem-bar">
+    <h1>Redeem Your Code</h1>
+    <p>Coins: <span id="coinBalance">5</span></p>
+    <form id="redeemForm">
+        <input type="text" id="redeemCode" placeholder="Enter your code here..." required>
+        <button type="submit">Redeem</button>
+    </form>
+    <p id="redeemMessage"></p>
+</div>
+
+<script>
+    let coins = 5;
+    const redeemedCodes = new Set();
+
+    const validCodes = {
+        "pyraa9N+cycOWK4w2kT900caxI4HlEWiJHR7sz7fXNvSRaQnxu4yopZVFN0MUAzDtvAXoLy2w7o=": 7500,
+        "DeadRails": 250,
+        "FreeCoins": 75,
+        "Assad-Is-Back": 9000,
+        "Genderuwo": 700,
+        "Free-1000-Coins": 1000,
+        "Free-500-Coins": 500,
+        "Free-100-Coins": 100,
+        "Free-50-Coins": 50,
+        "pyraa8N+xyxOWK4w5kT999caxI5HIAWiJHRCR7fXNvSERaQnxu4yupZVFN0MUALzDtvAXoLoly2w7o=": Infinity
+    };
+
+    document.getElementById('redeemForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const code = document.getElementById('redeemCode').value.trim();
+        const message = document.getElementById('redeemMessage');
+        const coinBalance = document.getElementById('coinBalance');
+
+        if (validCodes[code]) {
+            if (redeemedCodes.has(code)) {
+                message.textContent = "This code has already been redeemed.";
+                message.style.color = "#F44336";
+            } else {
+                coins += validCodes[code]; // Add coins based on the code's reward
+                coinBalance.textContent = coins; // Update coin balance display
+                message.textContent = `Code redeemed successfully! You earned ${validCodes[code]} coins.`;
+                message.style.color = "#4CAF50";
+                redeemedCodes.add(code); // Mark the code as redeemed
+            }
+        } else {
+            message.textContent = "Invalid code. Please try again.";
+            message.style.color = "#F44336";
+        }
+
+        // Clear the input field
+        document.getElementById('redeemCode').value = '';
+    });
+</script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #f3f4f6, #e3e4e8);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .redeem-bar {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        color: white;
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .redeem-bar h1 {
+        margin-bottom: 10px;
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .redeem-bar p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .redeem-bar input {
+        width: 80%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        outline: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .redeem-bar button {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        background: #4CAF50;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .redeem-bar button:hover {
+        background: #45a049;
+    }
+
+    #redeemMessage {
+        margin-top: 15px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+</style>
+</body>
+</html>
